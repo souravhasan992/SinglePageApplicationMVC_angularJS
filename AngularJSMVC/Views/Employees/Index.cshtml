@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+<script src="~/Scripts/angular.js"></script>
+<script src="~/Scripts/AAAJavaScript.js"></script>
+<div ng-app="myApp">
+    <div ng-controller="myCtrl" ng-init="GetAllData()">
+        <div ng-hide="View!=='List'">
+            
+            <button ng-click="SwitchView('Form')">Add new Employee</button>
+            <h2>Employee List</h2>
+            <table class="table-bordered">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Joining Date</th>
+                    <th>Salary</th>
+                    <th>Actions</th>
+                </tr>
+                <tr ng-repeat="emp in employees">
+                    <td>{{emp.Id}}</td>
+                    <td>{{emp.Name}}</td>
+                    <td>{{emp.GenderName}}</td>
+                    <td>{{emp.JoiningDate.substring(6,19)|date:'yyyy-MM-dd'}}</td>
+                    <td>{{emp.Salary}}</td>
+                    <td>
+                        <button ng-click="EmpEdit(emp)">Edit</button>
+                        <button ng-click="EmpDelete(emp)">Delete</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div ng-hide="View!=='Form'">
+            <h2>Create Employee</h2>
+            Name:<input type="text" ng-model="Employee.Name" />
+            @*Gender:<select ng-model="Employee.GenderId" ng-options="x.GenderId as x.GenderName in genders" value="{{x.GenderId}}">{{x.GenderName}}</select>*@
+            Gender:<select ng-model="Employee.GenderId"><option ng-repeat="x in genders" value="{{x.GenderId}}">{{x.GenderName}}</option> </select>
+            Joining Date:<input type="date" ng-model="Employee.JoiningDate" />
+            Salary:<input type="number" ng-model="Employee.Salary" />
+            <button ng-click="EmpSave();Reset();SwitchView('List')">Save</button>
+            <button ng-click="EmpUpdate();Reset();SwitchView('List')">Update</button>
+
+        </div>
+    </div>
+
+</div>
